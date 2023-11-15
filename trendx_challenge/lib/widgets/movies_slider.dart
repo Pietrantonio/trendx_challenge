@@ -13,7 +13,7 @@ class MoviesSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 200,
+      height: 300,
       width: double.infinity,
       child: ListView.builder(
         itemBuilder: ((context, index) {

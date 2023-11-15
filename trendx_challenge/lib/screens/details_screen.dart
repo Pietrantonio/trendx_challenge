@@ -16,7 +16,6 @@ class DetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(),
       body: CustomScrollView(
         slivers: [
           SliverAppBar.large(
@@ -26,13 +25,6 @@ class DetailsScreen extends StatelessWidget {
             pinned: true,
             floating: true,
             flexibleSpace: FlexibleSpaceBar(
-              title: Text(
-                movie.title,
-                style: GoogleFonts.belleza(
-                  fontSize: 17,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
               background: ClipRRect(
                 borderRadius: const BorderRadius.only(
                     bottomLeft: Radius.circular(
@@ -53,23 +45,19 @@ class DetailsScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Descrição",
-                    style: GoogleFonts.openSans(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w800,
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        movie.title,
+                        style: const TextStyle(
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 16),
-                  Text(
-                    movie.overview,
-                    style: GoogleFonts.openSans(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w400,
-                    ),
-                    textAlign: TextAlign.justify,
-                  ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 16.0),
                   SizedBox(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -130,6 +118,23 @@ class DetailsScreen extends StatelessWidget {
                         ),
                       ],
                     ),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    "Descrição",
+                    style: GoogleFonts.openSans(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  Text(
+                    movie.overview,
+                    style: GoogleFonts.openSans(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w400,
+                    ),
+                    textAlign: TextAlign.justify,
                   ),
                 ],
               ),

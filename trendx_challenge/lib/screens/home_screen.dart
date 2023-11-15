@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:trendx_challenge/api/api.dart';
+import 'package:trendx_challenge/colors.dart';
 import 'package:trendx_challenge/models/movie.dart';
 import 'package:trendx_challenge/widgets/movies_slider.dart';
-import 'package:trendx_challenge/widgets/search_field.dart';
+import 'package:trendx_challenge/screens/search_screen.dart';
 import 'package:trendx_challenge/widgets/trending_slider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,7 +18,6 @@ class _HomeScreenState extends State<HomeScreen> {
   late Future<List<Movie>> trendingMovies;
   late Future<List<Movie>> topRatedMovies;
   late Future<List<Movie>> upcomingMovies;
-  final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
@@ -33,7 +33,14 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Text("Trendx"),
+        title: Text(
+          "Trendx",
+          style: GoogleFonts.openSans(
+            fontSize: 30,
+            fontWeight: FontWeight.bold,
+            color: Colours.ratingColor,
+          ),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -43,16 +50,47 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SearchField(
-                searchController: _searchController,
+              Row(
+                children: [
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SearchScreen(),
+                          ),
+                        );
+                      },
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Pesquisar filmes',
+                            style: TextStyle(
+                              color: Colours.ratingColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Icon(
+                            Icons.search_rounded,
+                            color: Colours.ratingColor,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
               Text(
                 "Populares",
-                style: GoogleFonts.aBeeZee(
+                style: GoogleFonts.openSans(
                   fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: Colours.ratingColor,
                 ),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 16),
               SizedBox(
                 child: FutureBuilder(
                   future: trendingMovies,
@@ -71,12 +109,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 16),
               Text(
                 "Mais bem avaliados",
-                style: GoogleFonts.aBeeZee(fontSize: 25),
+                style: GoogleFonts.openSans(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: Colours.ratingColor,
+                ),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 16),
               SizedBox(
                 child: FutureBuilder(
                   future: topRatedMovies,
@@ -95,12 +137,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 16),
               Text(
                 "Próximas estreias",
-                style: GoogleFonts.aBeeZee(fontSize: 25),
+                style: GoogleFonts.openSans(
+                  fontSize: 25,
+                  fontWeight: FontWeight.bold,
+                  color: Colours.ratingColor,
+                ),
               ),
-              const SizedBox(height: 32),
+              const SizedBox(height: 16),
               SizedBox(
                 child: FutureBuilder(
                   future: upcomingMovies,

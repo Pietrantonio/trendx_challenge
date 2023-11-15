@@ -1,54 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:trendx_challenge/api/api.dart';
+import 'package:trendx_challenge/colors.dart';
 import 'package:trendx_challenge/models/movie.dart';
 import 'package:trendx_challenge/screens/details_screen.dart';
 
-class SearchField extends StatefulWidget {
-  const SearchField({
+class SearchScreen extends StatefulWidget {
+  const SearchScreen({
     super.key,
-    required TextEditingController searchController,
-  }) : _searchController = searchController;
-
-  final TextEditingController _searchController;
+  });
 
   @override
-  State<SearchField> createState() => _SearchFieldState();
+  State<SearchScreen> createState() => _SearchScreenState();
 }
 
-class _SearchFieldState extends State<SearchField> {
+class _SearchScreenState extends State<SearchScreen> {
   List<Movie> _searchResults = [];
+  final TextEditingController _searchController = TextEditingController();
 
-  Future<void> _searchMovies(String query) async {
-    if (query.isEmpty) {
-      setState(() {
-        _searchResults = [];
-      });
-      return;
-    }
-
-    final results = await Api().searchMovies(query);
-    setState(() {
-      _searchResults = results ?? [];
-    });
-  }
-
-  Future<void> _performSearch(String query) async {
+  Future<void> _search(String query) async {
     if (query.isEmpty) return;
 
     final results = await Api().searchMovies(query);
 
-    // Sort the results by release date first (ascending order).
     results?.sort((a, b) {
       final releaseDateComparison = a.releaseDate.compareTo(b.releaseDate);
       if (releaseDateComparison != 0) {
-        return releaseDateComparison; // Sort by release date.
+        return releaseDateComparison;
       } else {
-        return a.title.compareTo(
-            b.title); // If release dates are the same, sort by title.
+        return a.title.compareTo(b.title);
       }
     });
 
-    // Update the state with the sorted results.
     setState(() {
       _searchResults = results!;
     });
@@ -56,14 +38,31 @@ class _SearchFieldState extends State<SearchField> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 300,
-      child: Column(
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      body: Column(
         children: [
-          TextField(
-            controller: widget._searchController,
-            decoration: const InputDecoration(labelText: 'Search for movies'),
-            onChanged: (value) => _performSearch(value),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: TextField(
+              autofocus: true,
+              controller: _searchController,
+              decoration: InputDecoration(
+                labelText: 'Digite o nome do filme',
+                labelStyle: const TextStyle(color: Colours.ratingColor),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: const BorderSide(
+                    color: Colours.ratingColor,
+                  ),
+                ),
+              ),
+              cursorColor: Colours.ratingColor,
+              onChanged: (value) => _search(value),
+            ),
           ),
           const SizedBox(height: 16),
           Expanded(
@@ -73,7 +72,7 @@ class _SearchFieldState extends State<SearchField> {
                 final movie = _searchResults[index];
                 return GestureDetector(
                   child: ListTile(
-                    title: Text('${movie.title} ${(movie.releaseDate)}'),
+                    title: Text('${movie.title} (${movie.releaseDate})'),
                     onTap: () {
                       Navigator.push(
                         context,

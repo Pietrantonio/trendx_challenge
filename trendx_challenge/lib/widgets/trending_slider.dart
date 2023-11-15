@@ -20,7 +20,7 @@ class TrendingSlider extends StatelessWidget {
         options: CarouselOptions(
           height: 300,
           autoPlay: true,
-          viewportFraction: 0.55,
+          viewportFraction: 0.60,
           enlargeCenterPage: true,
           pageSnapping: true,
           autoPlayCurve: Curves.fastOutSlowIn,
