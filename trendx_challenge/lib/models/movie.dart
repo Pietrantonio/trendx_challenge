@@ -28,11 +28,4 @@ class Movie {
       voteAverage: json["vote_average"].toDouble() ?? "",
     );
   }
-
-  // int compareTo(Movie movie) {
-  //   if (releaseDate == movie.releaseDate) {
-  //     return title.compareTo(movie.title);
-  //   }
-  //   return releaseDate.compareTo(movie.releaseDate);
-  // }
 }
